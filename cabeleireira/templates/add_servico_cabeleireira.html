@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% block Body %}
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+<form class="form-signin" method="post">
+    {% csrf_token %}
+
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for m in messages %} {{ m }} {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{form.cabeleireira.id_for_label}}">Cabeleireira:</label>
+        {{form.cabeleireira|add_class:'form-control'|attr:"placeholder:Cabeleireira"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.servico.id_for_label}}">ServiÇo:</label>
+        {{form.servico|add_class:'form-control'|attr:"placeholder:ServiÇo"}}
+    </div>
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar</button>
+    <a href="{% url 'cabeleireira:lista-cabeleireira' %}" class="btn btn-lg btn-info btn-block">Voltar</a>
+</form>
+
+{% endif %}
+{% else %}
+<h3 class="h3 mb-3 font-weight-normal">Você precisa estar logado!.</h3>
+{% endif %}
+{% endblock Body %}

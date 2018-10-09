@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %} {% if user.is_superuser %}
+<br />
+<div class="row" style="position: absolute; right: 45%;">
+    <a class="btn btn-lg btn-primary" href="#">Adcionar Promoção</a>
+</div>
+<br />
+<br />
+
+{% endif %}{% endif %}
+<div class="row" style="padding: 2%;">
+
+    {% for p in promocoes %}
+    <div class="card" style="width: 30%; padding: 2%;">
+        <img class="card-img-top" src="{{p.imagem}}" alt="Card image cap" height="240">
+        <div class="card-body">
+            <h5 class="card-title">{{p.titulo}}</h5>
+            <p class="card-text">{{p.descrição}}</p>
+            <p class="card-text"> Como os seguintes serviços oferecidos:</p>
+            {% for s in p.servico %}
+                <p class="card-text">{{s.servico}}</p>
+            {% endfor %}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <p>Valor: {{p.valor_minimo}} - {{p.valor_maximo}} reais</p>
+                <p>Desconto de: {{p.valor_desconto}}</p>
+            </li>
+            <li class="list-group-item">
+                <a href="#" class="btn btn-lg btn-primary btn-block">Marque um Horario!</a>
+                {% if user.is_authenticated %} {% if user.is_superuser %}
+                <a class="btn btn-lg btn-success btn-block" href="#">Editar</a>
+                <a class="btn btn-lg btn-danger btn-block" href="#">Excluir</a>
+
+                {% endif %}{% endif %}
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock Body %}

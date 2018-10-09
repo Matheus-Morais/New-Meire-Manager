@@ -1,0 +1,38 @@
+{% extends "index.html" %} 
+{% load widget_tweaks %} 
+{% block Body %}
+<div class="login-addUser">
+    
+    {% if not user.is_authenticated %}
+    <form class="form-signin" method="post">
+        {% csrf_token %}
+        <h3 class="h3 mb-3 font-weight-normal">Login</h3>
+
+        {% if messages %}
+        <div class="alert alert-info" role="alert">
+            {% for m in messages %} {{ m }} {% endfor %}
+        </div>
+        {% endif %}
+
+
+        <label for="username" class="sr-only">Usuario</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Usuario" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <a class="nav-link" href="{% url 'accounts:add-user' %}">Não tem cadastro?</a>
+    </form>
+    {% else %}
+        <h3 class="h3 mb-3 font-weight-normal">Você ja esta logado, {{user.get_full_name|default:user.username}}.</h3>
+    {% endif %}
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+{% endblock Body %}

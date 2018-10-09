@@ -1,0 +1,52 @@
+{% extends "index.html" %} 
+{% load widget_tweaks %} 
+{% block Body %}
+<div class="login-addUser">
+
+        <form form class="form-signin" method="post">
+            {% csrf_token %} 
+            <h3 class="h3 mb-3 font-weight-normal">Cadastre-se</h3>
+            {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for m in messages %} {{ m }} {% endfor %}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="{{form1.rg.id_for_label}}" class="sr-only">RG</label>
+                {{form1.rg|add_class:'form-control'|attr:"placeholder:RG"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form1.CPF.id_for_label}}" class="sr-only">CPF</label>
+                {{form1.cpf|add_class:'form-control'|attr:"placeholder:CPF"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form1.telefone.id_for_label}}" class="sr-only">telefone</label>
+                {{form1.telefone|add_class:'form-control'|attr:"placeholder:telefone"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form.first_name.id_for_label}}" class="sr-only">Nome</label>
+                {{form.first_name|add_class:'form-control'|attr:"placeholder:Nome"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form.last_name.id_for_label}}" class="sr-only">Sobrenome</label>
+                {{form.last_name|add_class:'form-control'|attr:"placeholder:Sobrenome"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form.email.id_for_label}}" class="sr-only">Email</label>
+                {{form.email|add_class:'form-control'|attr:"placeholder:Email"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form.username.id_for_label}}" class="sr-only">Username</label>
+                {{form.username|add_class:'form-control'|attr:"placeholder:Username"}}
+            </div>
+            <div class="form-group">
+                <label for="{{form.password.id_for_label}}" class="sr-only">Password</label>
+                {% render_field form.password class="form-control" type="password" placeholder="Senha" %}
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a class="btn btn-secondary" href="{% url 'accounts:user-login' %}">Voltar</a>
+        </form>
+    </div>
+    <br/>
+    <br/>
+    {% endblock Body %}

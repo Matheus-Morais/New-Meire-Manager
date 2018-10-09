@@ -1,0 +1,39 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+<h1>Tabela administrativa</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuarios</th>
+            <th>Serviços</th>
+            <th>Promoções</th>
+            <th>Horarios</th>
+            <th>Cabeleireiras</th>
+            <th>Contato</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a href="{% url 'accounts:lista-usuarios'%}" class="btn btn-success">Lista de Users</a>
+            </td>
+            <td>
+                <a href="{% url 'servico:lista-servicos'%}" class="btn btn-success">Lista de Services</a>
+            </td>
+            <td>
+                <a href="{% url 'promoções:lista-promocoes'%}" class="btn btn-success">Lista de Promoções</a>
+            </td>
+            <td>Ainda não</td>
+            <td>
+                <a href="{% url 'cabeleireira:lista-cabeleireira'%}" class="btn btn-success">Lista de Cabeleireiras</a>
+            </td>
+            <td>
+                <a href="{% url 'msg:lista-mensagens'%}" class="btn btn-success">Lista de Mensagens</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}{% endif %}
+{% endblock Body %}

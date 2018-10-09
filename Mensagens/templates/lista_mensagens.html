@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %} 
+{% if user.is_superuser %}
+        <h1>Lista de Mensagens</h1>
+        {% if messages %}
+            {% for m in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{m}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if mensagens %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Mensagem</th>
+                        <th colspan="1">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in mensagens %}
+                        <tr>
+                            <td>{{m.id}}</td>
+                            <td>{{m.nome}}</td>
+                            <td>{{m.email}}</td>
+                            <td>{{m.telefone}}</td>
+                            <td>{{m.mensagem}}</td>
+                            <td><a href="{% url 'msg:delete-mensagem' m.id %}" class="btn btn-danger">Excluir</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info">
+                <p>Ainda não recebeu nenhuma mensagem!</p>
+            </div>
+        {% endif %}
+{% endif %}{% endif %}
+{% endblock Body %}

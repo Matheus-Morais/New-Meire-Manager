@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <title>Centro da Beleza</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+
+    <!-- Bootstrap CSS do home -->
+    <link href="{% static "css/carousel.css" %}" rel="stylesheet">
+
+    <!-- Outros estilos -->
+    <link href="{% static "css/estilo-proprio.css" %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    {% if user.is_authenticated %} {% if user.is_superuser %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'core' %}">New Meire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'promoções:lista-promocoes'%}">Promoções</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'servico:lista-servicos'%}">Serviços</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'agenda:lista-horario' %}">Agendar Horário</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contato'%}">Contato</a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    {% if user.is_authenticated %}{{user.get_full_name|default:user.username}}{% endif %}
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'gerencia' %}">Gerenciar Pagina</a>
+                    <a class="dropdown-item" href="{% url 'accounts:change-password' %}">Trocar Senha</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'accounts:user-logout' %}" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'core' %}">New Meire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'promoções:lista-promocoes'%}">Promoções</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'servico:lista-servicos'%}">Serviços</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'agenda:lista-horario' %}">Agendar Horário</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contato'%}">Contato</a>
+                </li>
+            </ul>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    {% if user.is_authenticated %}{{user.get_full_name|default:user.username}}{% endif %}
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'accounts:update-dados' %}">Atualizar dados</a>
+                    <a class="dropdown-item" href="{% url 'accounts:change-password' %}">Trocar Senha</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'accounts:user-logout' %}" class="dropdown-item">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% endif %} {% else %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'core' %}">New Meire</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'promoções:lista-promocoes'%}">Promoções</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'servico:lista-servicos'%}">Serviços</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'contato'%}">Contato</a>
+                </li>
+            </ul>
+
+            <a class="btn btn-light" href="{% url 'accounts:user-login' %}">Login</a>
+
+        </div>
+    </nav>
+    {% endif %}
+    <div class="container" style="background-color: #f5f5f5; position: relative; bottom:25px;">
+        {% block Body %}
+        <!-- Bloco utilizado para prover o conteudo para pagina, de outros componetes do django -->
+
+        {% endblock Body %}
+
+    </div>
+    <footer class="container">
+        <p>&copy; 2018 New Meire Centro de beleza</p>
+    </footer>
+    <!-- Bootstrap core JavaScript
+            ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="{% static "js/popper.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/holder.min.js" %}"></script>
+</body>
+
+</html>

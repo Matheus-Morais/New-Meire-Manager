@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+<div class="row">
+    <h1>Lista de Serviços que podem ser realizados por: {{nome}}</h1>
+    {% if messages %}
+    {% for m in messages %}
+    <div class="alert alert-danger" role="alert">
+        {{m}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if cabeleireira_servico %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Serviço</th>
+                <th colspan="2">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sc in cabeleireira_servico %}
+            <tr>
+                <td>{{sc.id}}</td>
+                <td>{{sc.cabeleireira.nome}}</td>
+                <td>{{sc.servico.servico}}</td>
+
+                <td><a href="{% url 'cabeleireira:editar-servico-cabeleireira' sc.id %}" class="btn btn-success">Editar</a></td>
+                <td><a href="{% url 'cabeleireira:excluir-servico-cabeleireira' sc.id %}" class="btn btn-danger">Excluir</a></td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">
+        <p>Ainda não realiza nenhum Serviço!</p>
+        <a href="{% url 'cabeleireira:novo-servico-cabeleireira'%}" class="btn btn-info">Adicionar serviço a um
+            profissonal</a>
+    </div>
+
+
+{% endif %}
+
+    
+    <a href="{% url 'cabeleireira:novo-servico-cabeleireira'%}" class="btn btn-lg btn-secondary btn-block">Adicionar serviço a um
+        profissonal</a>
+    <a href="{% url 'cabeleireira:lista-cabeleireira' %}" class="btn btn-lg btn-info btn-block">Voltar</a>
+
+</div>
+{% endif %}{% endif %}
+{% endblock Body %}

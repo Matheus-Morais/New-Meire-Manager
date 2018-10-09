@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %} {% if user.is_superuser %}
+<br />
+<div class="row" style="position: absolute; right: 45%;">
+    <a class="btn btn-lg btn-primary" href="#">Adcionar Serviço</a>
+</div>
+<br />
+<br />
+
+{% endif %}
+<div class="row" style="padding: 2%;">
+
+        <h1>Lista de Horarios</h1>
+        {% if messages %}
+            {% for m in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{m}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if agenda %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        {% if user.is_superuser %}
+                        <th>Atendente</th>
+                        <th>Cliente</th>
+                        {% endif %}
+                        <th>Cabeleireira</th>
+                        {% if not user.is_superuser %}
+                        <th>Numero da Cabeleireira</th>
+                        {% endif %}
+                        <th>Serviço</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th colspan="1">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in agenda %}
+                        <tr>
+                            <td>{{a.id}}</td>
+                            {% if user.is_superuser %}
+                            <td>{{a.usuario.first_name}}</td>
+                            <td>{{a.cliente.user.get_full_name}}</td>
+                            {% endif %}
+                            <td>{{a.cabeleireira_servico.cabeleireira.nome}}</td>
+                            {% if not user.is_superuser %}
+                            <td>{{a.cabeleireira_servico.cabeleireira.numero}}</td>
+                            {% endif %}
+                            <td>{{a.cabeleireira_servico.servico.servico}}</td>
+                            <td>{{a.data}}</td>
+                            <td>{{a.get_status_display}}</td>
+                            <td><a href="#" class="btn btn-danger">Excluir</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info">
+                <p>Ainda não recebeu nenhuma mensagem!</p>
+            </div>
+        {% endif %}
+    </div>
+    {% block horario %}
+        <!-- Bloco utilizado para prover o conteudo para pagina, de outros componetes do django -->
+    {% endblock horario %}
+</div>
+{% endif %}
+{% endblock Body %}

@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+{% block Body %}
+{% if user.is_authenticated %} 
+{% if user.is_superuser %}
+<div class="row">
+        <h1>Lista de Cabeleireiras</h1>
+        {% if messages %}
+            {% for m in messages %}
+                <div class="alert alert-info" role="alert">
+                    {{m}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% if cabeleireiras %}
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Trabalhos Realizados</th>
+                        <th colspan="2">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in cabeleireiras %}
+                        <tr>
+                            <td>{{c.id}}</td>
+                            <td>{{c.nome}}</td>
+                            <td>{{c.numero}}</td>
+                            <td>{{c.trabalhos_realizados}}</td>
+                            <td><a href="{% url 'cabeleireira:editar-cabeleireira' c.id %}" class="btn btn-success">Editar</a></td>
+                            <td><a href="{% url 'cabeleireira:lista-servico-cabeleireira' c.id %}" class="btn btn-primary">Lista de Serviços</a></td>
+                            <td><a href="{% url 'cabeleireira:excluir-cabeleireira' c.id %}" class="btn btn-danger">Excluir</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info">
+                <p>Ainda não recebeu nenhuma mensagem!</p>
+            </div>
+        {% endif %}
+        
+            <a href="{% url 'cabeleireira:nova-cabeleireira' %}" class="btn btn-lg btn-info btn-block">Adicionar Cabeleireira</a>
+        </div>
+{% endif %}{% endif %}
+{% endblock Body %}

@@ -1,0 +1,52 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% block Body %}
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+<form class="form-signin" method="post">
+    {% csrf_token %}
+
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for m in messages %} {{ m }} {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{form.titulo.id_for_label}}">Titulo:</label>
+        {{form.titulo|add_class:'form-control'|attr:"placeholder:Titulo"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.descrição.id_for_label}}">Descrição:</label>
+        {{form.descrição|add_class:'form-control'|attr:"placeholder:Descrição"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.servico.id_for_label}}">Serviços:</label>
+        {{form.servico|add_class:'form-control'|attr:"placeholder:Serviços"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.valor_minimo.id_for_label}}">Valor Minimo:</label>
+        {{form.valor_minimo|add_class:'form-control'|attr:"placeholder:Valor Minimo"}}
+    </div>
+
+    <div class="form-group">
+        <label for="{{form.valor_maximo.id_for_label}}">Valor Maximo:</label>
+        {{form.valor_maximo|add_class:'form-control'|attr:"placeholder:Valor Maximo"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.imagem.id_for_label}}">Imagem:</label>
+        {{form.imagem|add_class:'form-control'|attr:"placeholder:Imagem"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.valor_desconto.id_for_label}}">Desconto (em reais):</label>
+        {{form.valor_desconto|add_class:'form-control'|attr:"placeholder:Desconto"}}
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar</button>
+</form>
+
+{% endif %}
+{% else %}
+<h3 class="h3 mb-3 font-weight-normal">Você precisa estar logado!.</h3>
+{% endif %}
+{% endblock Body %}

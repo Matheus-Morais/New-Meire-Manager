@@ -1,0 +1,125 @@
+{% extends "index.html" %} {% load widget_tweaks %} {% block Body %}
+<br>
+{% if user.is_authenticated %} {% if user.is_superuser %}
+<div class="row" style="position: absolute; right: 45%;">
+    <a class="btn btn-primary" href="{% url 'msg:lista-mensagens' %}">Todas as mensagens</a>
+</div>
+<hr class="featurette-divider">
+{% endif %}{% endif %}
+
+<div class="row" style="aling:center;">
+    <div class="col-lg-7 text-center" >
+        <br>
+        
+        <ul class="list-group">
+            <li class="list-group-item">
+                    <h2 class="section-heading">Veja como é simples entrar em contato conosco!</h2>
+
+                <p class="section-subheading text-muted">Você pode ligar no nosso telefone,</p>
+
+                <p class="section-subheading text-muted">nos mandar uma mensagem pelo site, clicando em "Entre em Contato", ou</p>
+
+                <p class="section-subheading text-muted">nos visitar pelo nosso endereço, e para facilitar, clique em
+                    "Localização".
+                </p>
+            </li>
+        </ul>
+
+    </div>
+    <div class="card text-center" style="width: auto;">
+        <div class="card-body">
+            <h5 class="card-title">Contato</h5>
+            <br/>
+            <h6 class="card-subtitle mb-2 text-muted">Telefone:</h6>
+            <p class="card-text">(94) 3424-0209</p>
+            <h6 class="card-subtitle mb-2 text-muted">Endereço:</h6>
+            <p class="card-text">Av. Marechal Rondom, nº456, Centro, Redenção-PA</p>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a class="btn btn-secondary" href="#mensagem" class="card-link">Entre em Contato</a>
+                <a class="btn btn-secondary" href="#maps" class="card-link">Localização</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Contato -->
+<hr class="featurette-divider" id="mensagem">
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 class="section-heading">Nos envie uma mensagem!</h2>
+        <p class="section-subheading text-muted">Deixe que nós cuidamos da sua beleza!</p>
+    </div>
+</div>
+<hr class="featurette-divider">
+<div class="row">
+    <div class="col-lg-12">
+        <form novalidate method="post">
+            {% csrf_token %} {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                {% for m in messages %} {{ m }} {% endfor %}
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {% render_field form.nome class="form-control" placeholder="Nome" style="padding: 4%;height: auto;" %}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        {% render_field form.email class="form-control" placeholder="Email" style="padding: 4%;height: auto;" %}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                    <div class="form-group">
+                        {% render_field form.telefone class="form-control" placeholder="Telefone" style="padding: 4%;height: auto;" %}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {% render_field form.mensagem class="form-control" placeholder="Mensagem" style="height: 240px;" %}
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 text-right">
+                    <div></div>
+                    <button type="submit" class="btn btn-primary">Enviar!</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Fim Contato -->
+<br/>
+<!-- Maps -->
+<hr class="featurette-divider" id="maps">
+<div class="row">
+    <div class="col-lg-12 text-center">
+        <h2 class="section-heading">Onde nos encontrar?</h2>
+    </div>
+</div>
+<hr class="featurette-divider">
+<!--The div element for the map -->
+<div id="map" style="height: 400px;width: 100%;"></div>
+<hr class="featurette-divider">
+<!-- Fim do Maps -->
+<script>
+    // Initialize and add the map
+    function initMap() {
+        // The location of Uluru
+        var uluru = { lat: -8.029556, lng: -50.022840 };
+        // The map, centered at Uluru
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 17, center: uluru });
+        // The marker, positioned at Uluru
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+    }
+</script>
+<!--Load the API from the specified URL
+            * The async attribute allows the browser to render the page while the API loads
+            * The key parameter will contain your own API key (which is not needed for this tutorial)
+            * The callback parameter executes the initMap() function
+            -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiUQ9qYIb8NS902UxSedbLMMxdjmQhLUk&callback=initMap">
+</script> {% endblock Body %}

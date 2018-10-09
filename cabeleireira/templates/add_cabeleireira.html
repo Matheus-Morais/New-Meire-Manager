@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% block Body %}
+{% if user.is_authenticated %}
+{% if user.is_superuser %}
+<form class="form-signin" method="post">
+    {% csrf_token %}
+
+    {% if messages %}
+    <div class="alert alert-info" role="alert">
+        {% for m in messages %} {{ m }} {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="{{form.nome.id_for_label}}">Nome:</label>
+        {{form.nome|add_class:'form-control'|attr:"placeholder:Nome"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.numero.id_for_label}}">Numero de Telefone:</label>
+        {{form.numero|add_class:'form-control'|attr:"placeholder:Numero de Telefone"}}
+    </div>
+    <div class="form-group">
+        <label for="{{form.trabalhos_realizados.id_for_label}}">Nº de Trabalhos Realizados:</label>
+        {{form.trabalhos_realizados|add_class:'form-control'|attr:"placeholder:Nº de Trabalhos Realizados"}}
+    </div>
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar</button>
+    <a href="{% url 'cabeleireira:lista-cabeleireira' %}" class="btn btn-lg btn-info btn-block">Voltar</a>
+</form>
+
+{% endif %}
+{% else %}
+<h3 class="h3 mb-3 font-weight-normal">Você precisa estar logado!.</h3>
+{% endif %}
+{% endblock Body %}

@@ -1,0 +1,40 @@
+{% extends "lista_horarios.html" %}
+{% block horario %}
+{% if user.is_authenticated %} {% if user.is_superuser %}
+<br />
+<div class="row" style="position: absolute; right: 45%;">
+    <a class="btn btn-lg btn-primary" href="{% url 'servico:novo-servico' %}">Adcionar Serviço</a>
+</div>
+<br />
+<br />
+
+{% endif %}{% endif %}
+<div class="row" style="padding: 2%;">
+
+    {% for s in servicos %}
+    <div class="card" style="width: 30%; padding: 2%;">
+        <img class="card-img-top" src="{{s.imagem}}" alt="Card image cap" height="240">
+        <div class="card-body">
+            <h5 class="card-title">{{s.servico}}</h5>
+            <p class="card-text">{{s.descrição}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                {% if s.promocao %}
+                <p>Este item esta com {{s.valor_promocao}}% de desconto!</p>
+                {% endif %}
+                <p>Valor: {{s.valor_minimo}} - {{s.valor_maximo}} reais</p>
+            </li>
+            <li class="list-group-item">
+                <a href="#" class="btn btn-lg btn-primary btn-block">Marque um Horario!</a>
+                {% if user.is_authenticated %} {% if user.is_superuser %}
+                <a class="btn btn-lg btn-success btn-block" href="{% url 'servico:editar-servico' s.id %}">Editar</a>
+                <a class="btn btn-lg btn-danger btn-block" href="{% url 'servico:excluir-servico' s.id %}">Excluir</a>
+
+                {% endif %}{% endif %}
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock horario %}
